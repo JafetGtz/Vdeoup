@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {FlatList, Image, StyleSheet} from 'react-native';
+import React, { useState } from 'react';
+import { FlatList, Image, StyleSheet } from 'react-native';
 
 import {
   createBottomTabNavigator,
@@ -7,7 +7,10 @@ import {
 } from '@react-navigation/bottom-tabs';
 import VideoPlayer from './VideoPlayer';
 import videosData from './videosData';
-import {WINDOW_HEIGHT} from './utils';
+import { WINDOW_HEIGHT } from './utils';
+import CameraScreen from './camera';
+import { Feather, FontAwesome5, Ionicons } from '@expo/vector-icons'
+
 
 const BottomTab = createBottomTabNavigator();
 
@@ -20,7 +23,7 @@ const HomeScreen = () => {
     <FlatList
       data={videosData}
       pagingEnabled
-      renderItem={({item, index}) => (
+      renderItem={({ item, index }) => (
         <VideoPlayer data={item} isActive={activeVideoIndex === index} />
       )}
       onScroll={e => {
@@ -37,7 +40,7 @@ export default () => {
   return (
     <BottomTab.Navigator
       screenOptions={{
-        tabBarStyle: {backgroundColor: 'black'},
+        tabBarStyle: { backgroundColor: 'black' },
         headerShown: false,
         tabBarActiveTintColor: 'white',
       }}>
@@ -45,7 +48,7 @@ export default () => {
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <Image
               source={require('./assets/images/home.png')}
               style={[
@@ -56,67 +59,38 @@ export default () => {
           ),
         }}
       />
+
       <BottomTab.Screen
-        name="Discover"
+        name="VideoUps"
         component={HomeScreen}
         options={{
-          tabBarIcon: ({focused}) => (
-            <Image
-              source={require('./assets/images/search.png')}
-              style={[
-                styles.bottomTabIcon,
-                focused && styles.bottomTabIconFocused,
-              ]}
-            />
+
+          tabBarIcon: ({ focused }) => (
+            <FontAwesome5 name="play-circle" size={24} color="white" />
+
           ),
         }}
       />
       <BottomTab.Screen
-        name="NewVideo"
-        component={HomeScreen}
+        name="Add"
+        component={CameraScreen}
         options={{
-          tabBarLabel: () => null,
-          tabBarIcon: ({focused}) => (
-            <Image
-              source={require('./assets/images/new-video.png')}
-              style={[
-                styles.newVideoButton,
-                focused && styles.bottomTabIconFocused,
-              ]}
-            />
+          tabBarIcon: ({ focused }) => (
+            <Ionicons name='ios-add-circle' size={24} color="white" />
           ),
         }}
       />
+
       <BottomTab.Screen
-        name="Inbox"
+        name="Me"
         component={HomeScreen}
         options={{
-          tabBarIcon: ({focused}) => (
-            <Image
-              source={require('./assets/images/message.png')}
-              style={[
-                styles.bottomTabIcon,
-                focused && styles.bottomTabIconFocused,
-              ]}
-            />
+          tabBarIcon: ({ focused }) => (
+            <FontAwesome5 name='user-alt' size={24} color="white" />
           ),
         }}
       />
-      <BottomTab.Screen
-        name="Profile"
-        component={HomeScreen}
-        options={{
-          tabBarIcon: ({focused}) => (
-            <Image
-              source={require('./assets/images/user.png')}
-              style={[
-                styles.bottomTabIcon,
-                focused && styles.bottomTabIconFocused,
-              ]}
-            />
-          ),
-        }}
-      />
+
     </BottomTab.Navigator>
   );
 };
